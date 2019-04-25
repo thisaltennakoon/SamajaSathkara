@@ -55,8 +55,7 @@ input[type=submit]:hover {
     <input type="text" id="email" name="email" placeholder="computer@gmail.com">
 
     <label for="Description">Project Description</label><br>
-    <textarea name="description" placeholder="Please give a brief description about the project" rows="10" cols="50">
-    </textarea>
+    <textarea name="description" placeholder="Please give a brief description about the project" rows="10" cols="30"></textarea>
     
 
     </select>
@@ -70,6 +69,7 @@ input[type=submit]:hover {
 </html>
 
 <?php
+if(isset($_POST['submit'])){
 $servername = "localhost"; 
 $username = "root";                                            
 $password = "";
@@ -95,6 +95,6 @@ if ($conn->query($sql)===TRUE){
 }else{
     echo "Error: ". $sql ."<br>" . $conn->error;
 }
-
+}
     
 ?>
