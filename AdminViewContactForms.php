@@ -77,7 +77,8 @@ $conn = new mysqli($servername,$username,$password,$dbname); // making the conne
 if ($conn->connect_error){                                   // check whether the connection is correctly established or not
     die("Connection failed: " . $conn->connect_error);
 }                                                            // upto here ,connection is established
-echo "<h1>Admin Panel/Submitted Contact Forms</h1>";
+echo "<h1>Admin Panel/Submitted Contact Forms       </h1>";
+echo '<h3><a href="#C4">View Old Contact Forms</a></h3>';
 $sql = "SELECT id,readed,submitdate,submittime,firstname,lastname,email,pnumber,messages FROM ContactForm Where readed=false"; //reading things from the table
 $result = $conn->query($sql);
 $fetcheddata=array();
@@ -138,6 +139,67 @@ if ($result->num_rows > 0){
                    
 }else{
     echo "All submitted contact forms have been readed.";
+}
+echo "<hr>";echo "<hr>";
+echo '<h2 id="C4">Old Contact Forms</h2>';
+$sql = "SELECT id,readed,submitdate,submittime,firstname,lastname,email,pnumber,messages FROM ContactForm Where readed=true"; //reading things from the table
+$result = $conn->query($sql);
+if ($result->num_rows > 0){
+  while($row = $result->fetch_assoc()){       //while loop
+      //echo "firstname: ". $row["firstname"]."<br>"." lastname: " . $row["lastname"]."<br>"."email: ".$row["email"]."<br>"."pnumber: ".$row["pnumber"]."<br>"."<br>";
+      //$sql ='UPDATE ContactForm SET readed=true WHERE id='.$row["id"];
+      //$conn->query($sql);
+      //echo $result->num_rows;
+      
+      //array_push($fetcheddata,$row["id"],$row["readed"],$row["submitdate"],$row["submittime"],$row["firstname"],$row["lastname"],$row["email"],$row["pnumber"],$row["messages"]);
+      //echo $fetcheddata[$a]." - ".$fetcheddata[$a+1]." - ".$fetcheddata[$a+2]." - ".$fetcheddata[$a+3]." - ".$fetcheddata[$a+4]." - ".$fetcheddata[$a+5]." - ".$fetcheddata[$a+6]." - ".$fetcheddata[$a+7]." - ".$fetcheddata[$a+8];
+      echo "<b>Data & Time : </b>".$row["submitdate"]." ".$row["submittime"];
+      echo "<br>";
+     // echo "<hr width="50%" size="3" />";
+      echo "<b>Name : </b>".$row["firstname"]." ".$row["lastname"];
+      echo "<br>";
+      echo '<b>Email : </b><a href="mailto:'.$row["email"].'?Subject=Samaja%20Sathkara&body=Your Message: '.$row["messages"].'" target="_top">'.$row["email"].'</a>';
+      echo "<br>";
+      echo "<b>Phone Number : </b>".$row["pnumber"];
+      echo "<br>";
+      echo "<b>Message : </b>".$row["messages"];
+      
+      echo "<br>";
+      //<p>This is an email link:<a href="mailto:someone@example.com?Subject=Hello%20again" target="_top">Send Mail</a></p>
+      //echo '<input type="button" id="'.$row["id"].'" onclick="myFunction('.$row["id"].')">Mark as Read</button>';
+      //echo '<p id="'.$row["id"].'" style="display:none">'.$row["firstname"].'</p>';
+     // echo '<button type="button" id="'.$row["id"].'" onclick="myFunction('.$row["id"].')">Mark as Read</button>';
+      echo '<p>Mark as Read: <label class="switch"> <input type="checkbox" checked id="'.$row["id"].'" onclick="myFunction('.$row["id"].')"><span class="slider round"></span></label></p>';
+      //<label class="switch">
+///<input type="checkbox" >
+//<span class="slider round"></span></label>
+      //echo "<html><input type="button" onclick="alert('Hello World!')" value="Click Me!"></html>";
+      //<input type="button" onclick="alert('Hello World!')" value="Click Me!">
+      //echo "<br>";
+      echo "<hr>";
+      
+      //$a=$a+9;
+      
+  }   
+
+ /* echo '<form action="#" method="post">'.
+  '<input type="checkbox" name="readrequestcheckbox" value="true">Mark all as read</input>'.
+  
+  '<input type="submit" value="Apply">'.
+  '</form>';
+  function loadDoc() {
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    document.getElementById("demo").innerHTML = this.responseText;
+  }
+};
+xhttp.open("POST", "demo_post.asp", true);
+xhttp.send();
+  */
+                 
+}else{
+  echo "All submitted contact forms have been readed.";
 }
 ?>
 
