@@ -81,8 +81,8 @@ echo "<h1>Admin Panel/Submitted Contact Forms       </h1>";
 echo '<h3><a href="#C4">View Old Contact Forms</a></h3>';
 $sql = "SELECT id,readed,submitdate,submittime,firstname,lastname,email,pnumber,messages FROM ContactForm Where readed=false"; //reading things from the table
 $result = $conn->query($sql);
-$fetcheddata=array();
-$a=0;
+//$fetcheddata=array();
+//$a=0;
 if ($result->num_rows > 0){
     while($row = $result->fetch_assoc()){       //while loop
         //echo "firstname: ". $row["firstname"]."<br>"." lastname: " . $row["lastname"]."<br>"."email: ".$row["email"]."<br>"."pnumber: ".$row["pnumber"]."<br>"."<br>";
@@ -90,18 +90,19 @@ if ($result->num_rows > 0){
         //$conn->query($sql);
         //echo $result->num_rows;
         
-        array_push($fetcheddata,$row["id"],$row["readed"],$row["submitdate"],$row["submittime"],$row["firstname"],$row["lastname"],$row["email"],$row["pnumber"],$row["messages"]);
+        //array_push($fetcheddata,$row["id"],$row["readed"],$row["submitdate"],$row["submittime"],$row["firstname"],$row["lastname"],$row["email"],$row["pnumber"],$row["messages"]);
         //echo $fetcheddata[$a]." - ".$fetcheddata[$a+1]." - ".$fetcheddata[$a+2]." - ".$fetcheddata[$a+3]." - ".$fetcheddata[$a+4]." - ".$fetcheddata[$a+5]." - ".$fetcheddata[$a+6]." - ".$fetcheddata[$a+7]." - ".$fetcheddata[$a+8];
-        echo "<b>Data & Time : </b>".$fetcheddata[$a+2]." ".$fetcheddata[$a+3];
+        echo "<b>Data & Time : </b>".$row["submitdate"]." ".$row["submittime"];
         echo "<br>";
        // echo "<hr width="50%" size="3" />";
-        echo "<b>Name : </b>".$fetcheddata[$a+4]." ".$fetcheddata[$a+5];
+        echo "<b>Name : </b>".$row["firstname"]." ".$row["lastname"];
         echo "<br>";
-        echo '<b>Email : </b><a href="mailto:'.$fetcheddata[$a+6].'?Subject=Samaja%20Sathkara&body=Your Message: '.$fetcheddata[$a+8].'" target="_top">'.$fetcheddata[$a+6].'</a>';
+        echo '<b>Email : </b><a href="mailto:'.$row["email"].'?Subject=Samaja%20Sathkara&body=Your Message: '.$row["messages"].'" target="_top">'.$row["email"].'</a>';
+        echo '(Click this link to send a email)';
         echo "<br>";
-        echo "<b>Phone Number : </b>".$fetcheddata[$a+7];
+        echo "<b>Phone Number : </b>".$row["pnumber"];
         echo "<br>";
-        echo "<b>Message : </b>".$fetcheddata[$a+8];
+        echo "<b>Message : </b>".$row["messages"];
         
         echo "<br>";
         //<p>This is an email link:<a href="mailto:someone@example.com?Subject=Hello%20again" target="_top">Send Mail</a></p>
@@ -117,7 +118,7 @@ if ($result->num_rows > 0){
         //echo "<br>";
         echo "<hr>";
         
-        $a=$a+9;
+        //$a=$a+9;
         
     }   
 
@@ -159,6 +160,7 @@ if ($result->num_rows > 0){
       echo "<b>Name : </b>".$row["firstname"]." ".$row["lastname"];
       echo "<br>";
       echo '<b>Email : </b><a href="mailto:'.$row["email"].'?Subject=Samaja%20Sathkara&body=Your Message: '.$row["messages"].'" target="_top">'.$row["email"].'</a>';
+      echo '(Click this link to send a email)';
       echo "<br>";
       echo "<b>Phone Number : </b>".$row["pnumber"];
       echo "<br>";
@@ -199,7 +201,7 @@ xhttp.send();
   */
                  
 }else{
-  echo "All submitted contact forms have been readed.";
+  echo "No Old Contact Forms";
 }
 ?>
 
