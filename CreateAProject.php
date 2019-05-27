@@ -39,20 +39,20 @@ input[type=submit]:hover {
 </head>
 <body>
 
-<h3>Contact Form</h3>
+<h3>Create a Project</h3>
 
 <div class="container">
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
   <!--form action="hello.php" method="post" /-->
 
     <label for="projectname">Project Name</label>
-    <input type="text" id="projectname" name="projectname" placeholder="projectname">
+    <input type="text" id="projectname" name="projectname" placeholder="Project Name">
 
-    <label for="estimatedprojectcost">Estimated Project Cost </label>
-    <input type="text" id="estimatedprojectcost" name="estimatedprojectcost" placeholder="estimatedprojectcost">
+    <label for="estimatedprojectcost">Estimated Project Cost Rs.</label>
+    <input type="text" id="estimatedprojectcost" name="estimatedprojectcost" placeholder="Estimated Project Cost">
 
-    <label for="raised ">Raised</label>
-    <input type="text" id="raised" name="raised" placeholder="raised">
+    <label for="raised">Raised Rs.</label>
+    <input type="text" id="raised" name="raised" placeholder="Total Donations Gathered So Far">
 
     </select>
 

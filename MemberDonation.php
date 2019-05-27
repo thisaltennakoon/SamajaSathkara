@@ -39,7 +39,7 @@ input[type=submit]:hover {
 </head>
 <body>
 
-<h3>Non-Member Donation</h3>
+<h3>Member Donation</h3>
 
 <div class="container">
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">

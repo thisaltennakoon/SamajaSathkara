@@ -54,8 +54,10 @@ input[type=submit]:hover {
     <label for="email">Email Address</label>
     <input type="text" id="email" name="email" placeholder="computer@gmail.com">
 
-    <label for="Description">Project Description</label><br>
-    <textarea name="description" placeholder="Please give a brief description about the project" rows="10" cols="30"></textarea>
+    <label for="Description">Project Description</label>
+    <input type="text" id="description" name="description" placeholder="Please give a brief description about the project">
+    
+    
     
 
     </select>

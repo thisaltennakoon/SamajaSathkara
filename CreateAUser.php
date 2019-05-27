@@ -16,6 +16,16 @@ input[type=text], select, textarea {
   margin-bottom: 16px;
   resize: vertical;
 }
+input[type=password], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
 
 input[type=submit] {
   background-color: #4CAF49;
@@ -39,7 +49,7 @@ input[type=submit]:hover {
 </head>
 <body>
 
-<h3>Contact Form</h3>
+<h3>Create a User</h3>
 
 <div class="container">
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
@@ -60,8 +70,8 @@ input[type=submit]:hover {
     <label for="NIC">NIC</label>
     <input type="text" id="NIC" name="NIC" placeholder="973611170V">
     
-    <label for="userpassword">userpassword</label>
-    <input type="text" id="userpassword" name="userpassword" placeholder="userpassword">
+    <label for="userpassword">Password</label><br>
+    <input type="password" id="userpassword" name="userpassword" placeholder="Enter Your Password">
     
     
     </select>

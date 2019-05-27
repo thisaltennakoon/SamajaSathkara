@@ -1,0 +1,67 @@
+USE SamajaSathkara;
+SELECT * FROM ContactForm;
+SELECT * FROM ContactForm Where firstname='thisal';
+CREATE DATABASE SamajaSathkara;
+SHOW DATABASES; view all databases currently created
+DROP DATABASE SamajaSathkara; delete created database
+DROP TABLE User;
+
+CREATE TABLE ContactForm (
+id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+readed BOOLEAN,
+submitdate DATE,
+submittime TIME,
+firstname VARCHAR(30) NOT NULL,
+lastname VARCHAR(30) NOT NULL,
+email VARCHAR(50),
+pnumber VARCHAR(15),
+messages VARCHAR(50000));
+
+CREATE TABLE proposedprojects(
+id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+readed BOOLEAN,
+submitdate DATE,
+submittime TIME,
+proposername VARCHAR(30) NOT NULL,
+pnumber VARCHAR(15),
+email VARCHAR(50),
+description VARCHAR(50000));
+
+
+
+CREATE TABLE User (
+id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+userid VARCHAR(30) NOT NULL,
+createdate DATE,
+cratetime TIME,
+firstname VARCHAR(30) NOT NULL,
+lastname VARCHAR(30) NOT NULL,
+email VARCHAR(50),
+pnumber VARCHAR(15),
+userpassword VARCHAR(15));
+
+CREATE TABLE Projects (
+id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+projectid VARCHAR(30) NOT NULL,
+completed BOOLEAN,
+createdate DATE,
+cratetime TIME,
+projectname VARCHAR(30) NOT NULL,
+estimatedprojectcost VARCHAR(30) NOT NULL,
+raised VARCHAR(30) NOT NULL);
+
+
+CREATE TABLE Donation(
+id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+ProjectID VARCHAR(30) NOT NULL,
+amount INT(6),
+submitdate DATE,
+submittime TIME,
+BankSlip VARCHAR(30) NOT NULL,
+isMember BOOLEAN,
+UserID VARCHAR(30) NOT NULL,
+fullname VARCHAR(30) NOT NULL,
+NIC VARCHAR(30) NOT NULL,
+email VARCHAR(50),
+pnumber VARCHAR(15),
+approved BOOLEAN);

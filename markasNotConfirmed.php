@@ -11,7 +11,40 @@ if ($conn->connect_error){                                   // check whether th
 }  
 
 
+$sql = 'SELECT ProjectID,amount FROM Donation Where id='.$read; //reading things from the table
+$result = $conn->query($sql);
+if ($result->num_rows > 0){
+    while($row = $result->fetch_assoc()){
+        $projectid=$row["ProjectID"];
+        $amount=$row["amount"];
+    }
+}
 
+$sql = 'SELECT completed,estimatedprojectcost,raised FROM Projects Where projectid="'.$projectid.'"'; //reading things from the table
+$result = $conn->query($sql);
+if ($result->num_rows > 0){
+    while($row = $result->fetch_assoc()){
+        $completed=$row["completed"];
+        $estimatedprojectcost=$row["estimatedprojectcost"];
+        $raised=$row["raised"];
+    }
+}
+
+
+
+$raised=$raised-$amount;
+if ($estimatedprojectcost<=$raised){
+    $completed=1;
+}
+else{
+    $completed=0;
+}
+
+
+$sql ='UPDATE Projects SET raised='.$raised.' Where projectid="'.$projectid.'"';
+$conn->query($sql);
+$sql ='UPDATE Projects SET completed='.$completed.' Where projectid="'.$projectid.'"';
+$conn->query($sql);
 $sql ='UPDATE Donation SET approved=false WHERE id='.$read;
 $conn->query($sql);
 $conn->close();

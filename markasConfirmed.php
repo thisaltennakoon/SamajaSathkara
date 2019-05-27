@@ -30,11 +30,6 @@ if ($result->num_rows > 0){
     }
 }
 
-echo 'completed='.$completed;
-echo '<br>';
-echo 'estimatedprojectcost='.$estimatedprojectcost;
-echo '<br>';
-echo 'raised='.$raised;echo '<br>';
 
 $raised=$raised+$amount;
 if ($estimatedprojectcost<=$raised){
