@@ -57,12 +57,8 @@ input[type=submit]:hover {
     <label for="Description">Project Description</label>
     <input type="text" id="description" name="description" placeholder="Please give a brief description about the project">
     
-    
-    
-
     </select>
-
-  
+    
     <input type="submit" value="Submit">
   </form>
 </div>
@@ -71,15 +67,8 @@ input[type=submit]:hover {
 </html>
 
 <?php
-if(isset($_POST['submit'])){
-$servername = "localhost"; 
-$username = "root";                                            
-$password = "";
-$dbname = "SamajaSathkara";
-$conn = new mysqli($servername,$username,$password,$dbname); // making the connection with mysql
-if ($conn->connect_error){                       
-    die("Connection failed: " . $conn->connect_error);
-}                                                           
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                                                          
 $name=$_POST['name'];
 echo "Name: ".$name."<br>";
 $pnumber=$_POST['pnumber'];
@@ -88,10 +77,19 @@ $email=$_POST['email'];
 echo "Your Emali Address: ".$email."<br>";
 $description=$_POST['description'];
 echo "Description: ".$description."<br>";
+$date=strval(date("Y-m-d"));
+$time= strval(date("H:i:s"));
 
+$servername = "localhost"; 
+$username = "root";                                            
+$password = "";
+$dbname = "SamajaSathkara";
+$conn = new mysqli($servername,$username,$password,$dbname); // making the connection with mysql
+if ($conn->connect_error){                       
+    die("Connection failed: " . $conn->connect_error);
+} 
 
-
-$sql = "INSERT INTO proposedprojects(proposername,pnumber,email,description) VALUES ('$name','$pnumber','$email','$description')";
+$sql = "INSERT INTO proposedprojects(readed,submitdate,submittime,proposername,pnumber,email,description) VALUES (false,'$date','$time','$name','$pnumber','$email','$description')";
 if ($conn->query($sql)===TRUE){
     echo "<h3>The project you proposed has been recorded successfully</h3>"."<h3>We will contact you soon..</h3>";
 }else{
