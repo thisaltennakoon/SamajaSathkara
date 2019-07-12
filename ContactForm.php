@@ -36,29 +36,38 @@ input[type=submit]:hover {
   padding: 20px;
 }
 </style>
+<script>
+function validateForm() {
+  var x = document.forms["myForm"]["fname"].value;
+  if (x == "") {
+    alert("Name must be filled out");
+    return false;
+  }
+}
+</script>
 </head>
 <body>
 
 <h3>Contact Form</h3>
 
 <div class="container">
-<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+<form method="post" onsubmit="return validateForm()"  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
   <!--form action="hello.php" method="post" /-->
 
     <label for="fname">First Name</label>
-    <input type="text" id="fname" name="firstname" placeholder="Kumar">
+    <input type="text" id="fname" name="firstname" placeholder="Kumar" required>
 
     <label for="lname">Last Name</label>
-    <input type="text" id="lname" name="lastname" placeholder="Sangakkara">
+    <input type="text" id="lname" name="lastname" placeholder="Sangakkara" required>
 
     <label for="email">Email Address</label>
-    <input type="text" id="email" name="email" placeholder="computer@gmail.com">
+    <input type="text" id="email" name="email" placeholder="computer@gmail.com" required>
 
     <label for="pnumber">Phone Number</label>
-    <input type="text" id="pnumber" name="pnumber" placeholder="0717303215">
+    <input type="text" id="pnumber" name="pnumber" placeholder="0717303215" required>
 
     <label for="message">Message</label>
-    <input type="text" id="message" name="message" placeholder="Enter Your Message">
+    <input type="text" id="message" name="message" placeholder="Enter Your Message" required>
 
     </select>
 

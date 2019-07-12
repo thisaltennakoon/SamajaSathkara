@@ -64,53 +64,94 @@ input[type=submit]:hover {
 </body>
 </html>
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-$projectname=$_POST['projectname'];
-echo "Project Name: ".$projectname."<br>";
-$estimatedprojectcost=$_POST['estimatedprojectcost'];
-echo "Estimated Project Cost: ".$estimatedprojectcost."<br>";
-$raised=$_POST['raised'];
-echo "Raised: ".$raised."<br>";
-
-
-$servername = "localhost";                                    // host which has established our computer.If the database is on a sever, then this should change accordinly
-$username = "root";                                           // username and the password of the mysql sever
-$password = "";
-$dbname = "SamajaSathkara";
-$conn = new mysqli($servername,$username,$password,$dbname); // making the connection with mysql
-if ($conn->connect_error){                                   // check whether the connection is correctly established or not
-    die("Connection failed: " . $conn->connect_error);
-}                                                            // upto here ,connection is established
-
-
-
-$c="'";
-$date=strval(date("Y-m-d"));
-$time= strval(date("H:i:s"));
-$date1=strval(date("Ymd"));
-$time1= strval(date("His"));
-$projectid= "project".$date1.$time1;
-
-$sql = "INSERT INTO Projects (completed ,createdate ,cratetime ,projectname ,estimatedprojectcost ,raised ,projectid) VALUES (false,'$date','$time','$projectname','$estimatedprojectcost','$raised','$projectid')"; // insert data to the created table
-if ($conn->query($sql)===TRUE){
-    echo "<h3>Project has been sucessfully created";
-}else{
-    echo "Error: ". $sql ."<br>" . $conn->error;
+abstract class State{
+    public function changestateoftheproject($project){}
+}
+/*class ProposedProject extends State{
+    public function __construct() {
+        echo "I am ProposedProject      ";
+    }
+    public function changestateoftheproject($project){
+        $project->set_state(new ProjectInProgress());
+    }
+}*/
+class ProjectInProgress extends State{
+    public function __construct() {
+        echo "I am Project In Progress\r\n";
+    }
+    public function changestateoftheproject($project){
+        $project->set_state(new CompletedProject());
+    }
+}
+class CompletedProject extends State{
+    public function __construct() {
+        echo "I am CompletedProject     ";
+    }
+    public function changestateoftheproject($project){
+        //project.set_state(new ProjectInProgress());
+    }
 }
 
+class Project{
+    static $projectid=0;
+    var $projectname,$projecttype,$descriptionabouttheproject,$state,$estimatedprojectcost,$totaldonationsgatheredsofar,$date_of_proposal;
+    var $user_of_the_proposal,$date_of_approval,$date_of_completion,$this_project_id;
+  
+    public function __construct($projectname,$estimatedprojectcost,$raised) { //create a new project by admin
+      $servername = "localhost";                                    // host which has established our computer.If the database is on a sever, then this should change accordinly
+      $username = "root";                                           // username and the password of the mysql sever
+      $password = "";
+      $dbname = "SamajaSathkara";
+      $conn = new mysqli($servername,$username,$password,$dbname); // making the connection with mysql
+      if ($conn->connect_error){                                   // check whether the connection is correctly established or not
+          die("Connection failed: " . $conn->connect_error);
+      }                                                            // upto here ,connection is established
+      $c="'";
+      $date=strval(date("Y-m-d"));
+      $time= strval(date("H:i:s"));
+      $date1=strval(date("Ymd"));
+      $time1= strval(date("His"));
+      $projectid= "project".$date1.$time1;
+      
+      $sql = "INSERT INTO Projects (completed ,createdate ,cratetime ,projectname ,estimatedprojectcost ,raised ,projectid) VALUES (false,'$date','$time','$projectname','$estimatedprojectcost','$raised','$projectid')"; // insert data to the created table
+      if ($conn->query($sql)===TRUE){
+          echo "<h3>Project has been sucessfully created";
+      }else{
+          echo "Error: ". $sql ."<br>" . $conn->error;
+      }
+      
+      $conn->close();    //close the connection with database
+    }
+ 
+    public function donatetothisproject($amount){
+        //echo $this->$projectid;
+        //echo $amount;
+        //echo $this->projectname;
+        if ((($this->totaldonationsgatheredsofar)+($amount))<=$this->estimatedprojectcost){
+            $this->totaldonationsgatheredsofar=($this->totaldonationsgatheredsofar)+$amount;
+            if($this->totaldonationsgatheredsofar>=$this->estimatedprojectcost){
+                $this->changestate();
+            }
+        }else{
+            echo "Unable to donate this project";
+        }
+    }
+    public function changestate(){
+        //echo "my current state is ".$this->state;
+        $this->state->changestateoftheproject($this);
+    }
+    public function set_state($s){
+        $this->state=$s;
+    }
+}
 
-
-
-/*$sql = "SELECT firstname,lastname,email,pnumber FROM ContactForm"; //reading things from the table
-$result = $conn->query($sql);
-if ($result->num_rows > 0){
-    while($row = $result->fetch_assoc()){       //while loop
-        echo "firstname: ". $row["firstname"]."<br>"." lastname: " . $row["lastname"]."<br>"."email: ".$row["email"]."<br>"."pnumber: ".$row["pnumber"]."<br>"."<br>";
-    }                       
-}else{
-    echo "0 results";
-}*/
-
-$conn->close();    //close the connection with database
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $projectname=$_POST['projectname'];
+  echo "Project Name: ".$projectname."<br>";
+  $estimatedprojectcost=$_POST['estimatedprojectcost'];
+  echo "Estimated Project Cost: ".$estimatedprojectcost."<br>";
+  $raised=$_POST['raised'];
+  echo "Raised: ".$raised."<br>";
+  $project=new Project($projectname,$estimatedprojectcost,$raised);
 }
 ?>
